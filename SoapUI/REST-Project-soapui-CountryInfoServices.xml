@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="d221a816-b7ce-4af4-8c6a-ca0bb39717f4" activeEnvironment="Default" name="CountryInfoServices" soapui-version="5.7.0" abortOnError="false" runType="SEQUENTIAL" resourceRoot="" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:RestService" id="6d7f9088-79a0-478f-853d-ffd3fd8353b1" wadlVersion="http://wadl.dev.java.net/2009/02" name="https://restcountries.com" type="rest" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache/><con:endpoints><con:endpoint>https://restcountries.com</con:endpoint></con:endpoints><con:resource name="Inr" path="/v2/currency/inr" id="29d45c2c-f5cb-4d88-a045-a9c375c72143"><con:settings/><con:parameters/><con:method name="Inr 1" id="a575edfb-3862-465b-815c-bffb50f4977d" method="GET"><con:settings/><con:parameters/><con:request name="Request 1" id="d91e2822-35f0-4ddd-9944-6e5d257b9e38" mediaType="application/json"><con:settings/><con:endpoint>https://restcountries.com</con:endpoint><con:request/><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:request></con:method></con:resource></con:interface><con:testSuite id="00783411-87bb-4833-8db2-fd3a33c350a2" name="TestSuite 1"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="208d4539-06b4-46e9-a49d-54bc088e24c8" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="CountryInfo" searchProperties="true"><con:settings/><con:testStep type="groovy" name="Groovy Script" id="0200ba70-a141-4764-9def-7425f951d827"><con:settings/><con:config><script>import groovy.json.JsonSlurper
+    import jxl.*
+    import jxl.write.*
+    //Read Excel file
+    Workbook book =Workbook.getWorkbook(new File("C:\\Users\\mindc1may134\\Desktop\\Comprehensive_M_1089100\\SoapUI\\Book2.xls"))
+    Sheet Sheet1=book.getSheet(0)
+    def getRequest=Sheet1.getCell(2,1).getContents()
+//  
+    def get=testRunner.testCase.getTestStepByName("GET")
+    get.setPropertyValue("Endpoint",getRequest)
+    testRunner.runTestStepByName("GET")
+    testRunner.testCase.getTestStepByName("GET").getPropertyValue("Response")</script></con:config></con:testStep><con:testStep type="httprequest" name="GET" id="934f5593-c2d8-4a7d-a23e-692b1f4d8297"><con:settings/><con:config method="GET" xsi:type="con:HttpRequest" id="ae46e5f3-a241-4e5d-a6d6-d725c02cd800" name="GET" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:endpoint>https://restcountries.com/v2/currency/pen</con:endpoint><con:request/><con:assertion type="GroovyScriptAssertion" id="b4bc3dba-1463-4437-bfcb-344d0a2234ce" name="Script Assertion"><con:configuration><scriptText>//verify the subregion ,capital
+//Grabbing the respose
+import groovy.json.JsonSlurper
+def response=messageExchange.response.responseContent
+def jsons1=new JsonSlurper().parseText(response)
+log.info jsons1.subregion
+log.info jsons1.name
+assert ["South America"] ==jsons1.subregion
+assert ["Lima"] ==jsons1.capital</scriptText></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:parameters/></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>
